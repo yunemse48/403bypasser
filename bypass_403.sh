@@ -9,7 +9,7 @@ echo "HTTP status codes are detected by both GET and HEAD requests."
 echo -e "\nUsage: ./bypass_403.sh <url> <directory>"
 echo -e "\nExample: ./bypass_403.sh https://google.com maps\n"
 
-re='^[0-9]+$'   #regex for testing, is a number?
+re='^[0-9]+$'   #regex for testing whether it is a number
 
 echo -e "-----------------------------------------------------------------------------------"
 
