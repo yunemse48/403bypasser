@@ -1,1 +1,0 @@
-oku beni oku
