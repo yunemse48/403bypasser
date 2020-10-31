@@ -17,27 +17,27 @@
 
 ## Kullanım / Usage
 
-`./bypass_403.sh -u <single_URL> -d <single_dir>`
-`./bypass_403.sh -U <path_of_URL_list> -D <path_of_dir_list>`
-`./bypass_403.sh -u <single_URL> -D <path_of_dir_list>`
-`./bypass_403.sh -U <path_of_URL_list> -d <single_dir>`
+1. `./bypass_403.sh -u <single_URL> -d <single_dir>`
+2. `./bypass_403.sh -U <path_of_URL_list> -D <path_of_dir_list>`
+3. `./bypass_403.sh -u <single_URL> -D <path_of_dir_list>`
+4. `./bypass_403.sh -U <path_of_URL_list> -d <single_dir>`
 
 ## Örnekler / Examples
 
-`./bypass_403.sh -u https://example.com -d example`
-`./bypass_403.sh -U some/path/urls.txt -D some/path/dirs.txt`
+* `./bypass_403.sh -u https://example.com -d example`
+* `./bypass_403.sh -U some/path/urls.txt -D some/path/dirs.txt`
 
 ## Which Cases Does This Tool Check?
- 1- Testing `https://url.com/path`
- 2- Testing `https://url.com/%2e/path`
- 3- Testing `https://url.com/path/.`
- 4- Testing `https://url.com//path//`
- 5- Testing `https://url.com/./path/./`
- 6- Testing `https://url.com/path/`
- 7- Testing `https://url.com/path..;/`
- 8- Testing `https://url.com/path` with header poisoning `X-Custom-IP-Authorization: 127.0.0.1`
- 9- Testing `https://url.com/anything` with header poisoning `X-Original-URL: /directory`
-10- Testing `https://url.com` with header poisoning `X-Rewrite-URL: /directory`
+ 1. Testing `https://url.com/path`
+ 2. Testing `https://url.com/%2e/path`
+ 3. Testing `https://url.com/path/.`
+ 4. Testing `https://url.com//path//`
+ 5. Testing `https://url.com/./path/./`
+ 6. Testing `https://url.com/path/`
+ 7. Testing `https://url.com/path..;/`
+ 8. Testing `https://url.com/path` with header poisoning `X-Custom-IP-Authorization: 127.0.0.1`
+ 9. Testing `https://url.com/anything` with header poisoning `X-Original-URL: /directory`
+10. Testing `https://url.com` with header poisoning `X-Rewrite-URL: /directory`
 
 **Added Features in v1.1**: It's now possible to pass files (lists) to 403bypasser as input via arguments. Furthermore, two more test cases added: 
 poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers. 
