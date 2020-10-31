@@ -237,10 +237,10 @@ do
         		echo -n -e "\t\tHEAD: ---"
 		fi
 
-		#9-Testing https://url.com/path with header poisoning X-Original-URL
+		#9-Testing https://url.com/anything with header poisoning X-Original-URL: /directory
 		echo -e "\n"
-		get9=$(curl -H "X-Original-URL: $path" $line/testt -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head9=$(curl -H "X-Original-URL: $path" $line/testt -I -s | head -n 1 | cut -d " " -f 2)
+		get9=$(curl -H "X-Original-URL: /$path" $line/testt -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head9=$(curl -H "X-Original-URL: /$path" $line/testt -I -s | head -n 1 | cut -d " " -f 2)
 
 		url="$line/$path X-Original-URL"
 		len=${#url}
@@ -252,11 +252,33 @@ do
         		echo -n "$line/$path X-Original-URL";for((i=1;i<=$rem;i+=1)); do echo -n " "; done;echo -n " --> GET: ---"
 		fi
 
-		if [[ $head8 =~ $re ]];then
+		if [[ $head9 =~ $re ]];then
         		echo -n -e "\t\tHEAD: $head9"
 		else
         		echo -n -e "\t\tHEAD: ---"
 		fi
+
+		#10-Testing https://url.com with header poisoning X-Rewrite-URL: /directory
+                echo -e "\n"
+                get10=$(curl -H "X-Rewrite-URL: /$path" $line -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+                head10=$(curl -H "X-Rewrite-URL: /$path" $line -I -s | head -n 1 | cut -d " " -f 2)
+
+                url="$line/$path X-Rewrite-URL"
+                len=${#url}
+                rem=$((50-len))
+
+                if [[ $get10 =~ $re ]];then
+                        echo -n "$line/$path X-Rewrite-URL";for((i=1;i<=$rem;i+=1)); do echo -n " "; done;echo -n " --> GET: $get10"
+                else
+                        echo -n "$line/$path X-Rewrite-URL";for((i=1;i<=$rem;i+=1)); do echo -n " "; done;echo -n " --> GET: ---"
+                fi
+
+                if [[ $head10 =~ $re ]];then
+                        echo -n -e "\t\tHEAD: $head10"
+                else
+                        echo -n -e "\t\tHEAD: ---"
+                fi
+
 	done < "$dirpath"
 done < "$urlpath"
 
