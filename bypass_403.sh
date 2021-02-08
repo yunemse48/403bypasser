@@ -60,8 +60,8 @@ do
 
 		#1-Testing https://url.com/path
 		echo -e "\n"
-		get1=$(curl $line/$path -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head1=$(curl $line/$path -I -s | head -n 1 | cut -d " " -f 2)
+		get1=$(curl $line/$path -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head1=$(curl $line/$path -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line/$path"
 		len=${#url}
@@ -82,8 +82,8 @@ do
 
 		#2-Testing https://url.com/%2e/path
 		echo -e "\n"
-		get2=$(curl $line/%2e/$path -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head2=$(curl $line/%2e/$path -I -s | head -n 1 | cut -d " " -f 2)
+		get2=$(curl $line/%2e/$path -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head2=$(curl $line/%2e/$path -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line/%2e/$path"
 		len=${#url}
@@ -104,8 +104,8 @@ do
 
 		#3-Testing https://url.com/path/.
 		echo -e "\n"
-		get3=$(curl $line/$path/. -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head3=$(curl $line/$path/. -I -s | head -n 1 | cut -d " " -f 2)
+		get3=$(curl $line/$path/. -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head3=$(curl $line/$path/. -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line/$path/."
 		len=${#url}
@@ -126,8 +126,8 @@ do
 
 		#4-Testing https://url.com//path//
 		echo -e "\n"
-		get4=$(curl $line//$path// -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head4=$(curl $line//$path// -I -s | head -n 1 | cut -d " " -f 2)
+		get4=$(curl $line//$path// -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head4=$(curl $line//$path// -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line//$path//"
 		len=${#url}
@@ -149,8 +149,8 @@ do
 
 		#5-Testing https://url.com/./path/./
 		echo -e "\n"
-		get5=$(curl $line/./$path/./ -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head5=$(curl $line/./$path/./ -I -s | head -n 1 | cut -d " " -f 2)
+		get5=$(curl $line/./$path/./ -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head5=$(curl $line/./$path/./ -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line/./$path/./"
 		len=${#url}
@@ -172,8 +172,8 @@ do
 
 		#6-Testing https://url.com/path/
 		echo -e "\n"
-		get6=$(curl $line/$path/ -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head6=$(curl $line/$path/ -I -s | head -n 1 | cut -d " " -f 2)
+		get6=$(curl $line/$path/ -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head6=$(curl $line/$path/ -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line/$path/"
 		len=${#url}
@@ -195,8 +195,8 @@ do
 
 		#7-Testing https://url.com/path..;/
 		echo -e "\n"
-		get7=$(curl $line/$path..\;/ -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head7=$(curl $line/$path..\;/ -I -s | head -n 1 | cut -d " " -f 2)
+		get7=$(curl $line/$path..\;/ -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head7=$(curl $line/$path..\;/ -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line/$path..;/"
 		len=${#url}
@@ -218,8 +218,8 @@ do
 
 		#8-Testing https://url.com/path with header poisoning
 		echo -e "\n"
-		get8=$(curl -H "X-Custom-IP-Authorization: 127.0.0.1" $line/$path..\;/ -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head8=$(curl -H "X-Custom-IP-Authorization: 127.0.0.1" $line/$path..\;/ -I -s | head -n 1 | cut -d " " -f 2)
+		get8=$(curl -H "X-Custom-IP-Authorization: 127.0.0.1" $line/$path..\;/ -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head8=$(curl -H "X-Custom-IP-Authorization: 127.0.0.1" $line/$path..\;/ -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line/$path X-C-IP-Auth"
 		len=${#url}
@@ -239,8 +239,8 @@ do
 
 		#9-Testing https://url.com/anything with header poisoning X-Original-URL: /directory
 		echo -e "\n"
-		get9=$(curl -H "X-Original-URL: /$path" $line/testt -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-		head9=$(curl -H "X-Original-URL: /$path" $line/testt -I -s | head -n 1 | cut -d " " -f 2)
+		get9=$(curl -H "X-Original-URL: /$path" $line/testt -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+		head9=$(curl -H "X-Original-URL: /$path" $line/testt -I -s -k | head -n 1 | cut -d " " -f 2)
 
 		url="$line/$path X-Original-URL"
 		len=${#url}
@@ -260,8 +260,8 @@ do
 
 		#10-Testing https://url.com with header poisoning X-Rewrite-URL: /directory
                 echo -e "\n"
-                get10=$(curl -H "X-Rewrite-URL: /$path" $line -s | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
-                head10=$(curl -H "X-Rewrite-URL: /$path" $line -I -s | head -n 1 | cut -d " " -f 2)
+                get10=$(curl -H "X-Rewrite-URL: /$path" $line -s -k | head -n 2 | tail -1 | cut -d " " -f 1 | tr -cd [:digit:])
+                head10=$(curl -H "X-Rewrite-URL: /$path" $line -I -s -k | head -n 1 | cut -d " " -f 2)
 
                 url="$line/$path X-Rewrite-URL"
                 len=${#url}
