@@ -2,6 +2,9 @@
 
 # 403bypasser
 
+# IMPORTANT NOTE:
+## This project will be deprecated and a new, more powerful and flexible tool will take place here. The new project is still under development (being written in Python 3) will be published soon. Thanks for your patience...
+
 ## Türkçe
 **403bypasser**, erişimine herhangi bir sebeple izin verilmeyen ve HTTP 403 durum kodunu döndüren sayfalara erişmek için çeşitli bypass tekniklerini otomatize eden bir araçtır. URL ve erişilmek istenen dizin parametreleri tek olarak ya da liste olarak verilebilir. Bu araç geliştirilmeye devam edecektir, katkılara açıktır. 
 
