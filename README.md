@@ -3,7 +3,7 @@
 # 403bypasser
 
 # IMPORTANT NOTE:
-## This project will be deprecated and a new, more powerful and flexible tool will take place here. The new project is still under development (being written in Python 3) and will be published soon. Thanks for your patience...
+## New README is coming...
 
 ## Türkçe
 **403bypasser**, erişimine herhangi bir sebeple izin verilmeyen ve HTTP 403 durum kodunu döndüren sayfalara erişmek için çeşitli bypass tekniklerini otomatize eden bir araçtır. URL ve erişilmek istenen dizin parametreleri tek olarak ya da liste olarak verilebilir. Bu araç geliştirilmeye devam edecektir, katkılara açıktır. 
@@ -18,17 +18,7 @@
 -d <single_directory>
 -D <path_of_directory_list>
 
-## Kullanım / Usage
 
-1. `./bypass_403.sh -u <single_URL> -d <single_dir>`
-2. `./bypass_403.sh -U <path_of_URL_list> -D <path_of_dir_list>`
-3. `./bypass_403.sh -u <single_URL> -D <path_of_dir_list>`
-4. `./bypass_403.sh -U <path_of_URL_list> -d <single_dir>`
-
-## Örnekler / Examples
-
-* `./bypass_403.sh -u https://example.com -d example`
-* `./bypass_403.sh -U some/path/urls.txt -D some/path/dirs.txt`
 
 ## Which Cases Does This Tool Check?
  1. Testing `https://url.com/path`
