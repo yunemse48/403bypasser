@@ -1,6 +1,6 @@
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-[![Generic badge](https://img.shields.io/badge/Whoami-Yunus Emre SERT-yellow.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/Whoami-aaa-yellow.svg)](https://shields.io/)
 
 # 403bypasser
 
