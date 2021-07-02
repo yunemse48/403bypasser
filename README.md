@@ -45,7 +45,8 @@ poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers.
 
 ## To-Do List
 - [ ] GUI
-- [ ] Add rate-limit option
+- [ ] Add Rate-Limit Option
+- [ ] Export cURL Command for Each Request
 
 ## Which Cases Does This Tool Check?
 
