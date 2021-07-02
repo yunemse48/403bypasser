@@ -15,13 +15,14 @@
 
 ## Usage
 
-**Arguments:**
--u <single_url>&emsp;&emsp;&emsp;ex: /admin, admin, /admin/, admin/&emsp;403bypasser handles all these usages in the same way, it does not matter which one you prefer!<br>
+**Arguments:**<br>
+1.1 -u <single_url>&emsp;&emsp;&emsp;ex: /admin, admin, /admin/, admin/&emsp;403bypasser handles all these usages in the same way, it does not matter which one you prefer!<br>
 -U <path_of_URL_list>
 -d <single_directory>
 -D <path_of_directory_list>
 
-
+| Argument | Description | Example |
+| -u | single URL to scan | http://example.com |
 
 ## Which Cases Does This Tool Check?
  1. Testing `https://url.com/path`
