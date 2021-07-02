@@ -7,14 +7,16 @@
 ## New README is coming...
 
 ## Türkçe
-**403bypasser**, erişimine herhangi bir sebeple izin verilmeyen ve HTTP 403 durum kodunu döndüren sayfalara erişmek için çeşitli bypass tekniklerini otomatize eden bir araçtır. URL ve erişilmek istenen dizin parametreleri tek olarak ya da liste olarak verilebilir. Bu araç geliştirilmeye devam edecektir, katkılara açıktır. 
+**403bypasser**, erişim kısıtlaması bulunan sayfalardaki kısıtlamaları ve kontrolleri atlatmak amacıyla kullanılan teknikleri otomatize etmek için yazılmıştır. Bu araç geliştirilmeye devam edecektir, katkılara açıktır. 
 
 ## English 
 
-**403bypasser** is a tool that automatize the techniques to bypass access control of the pages which return HTTP 403 status code that means accessing the page or resource you were trying to reach is absolutely forbidden for some reason. This tool takes two parameters(single or list): a URL and a directory. **403bypasser** will continue to be improved and it is open to contributions.
+**403bypasser** has been written to automate the techniques used to circumvent restrictions and access controls on restricted pages. **403bypasser** will continue to be improved and it is open to contributions.
+
+## Usage
 
 **Arguments:**
--u <single_url>
+-u <single_url>&nbsp;&nbsp;&nbsp;ex: /admin, admin, /admin/, admin/&nbsp;403bypasser handles all these usages in the same way, it does not matter which one you prefer!
 -U <path_of_URL_list>
 -d <single_directory>
 -D <path_of_directory_list>
