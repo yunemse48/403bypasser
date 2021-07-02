@@ -21,9 +21,9 @@
 -d <single_directory>
 -D <path_of_directory_list>
 
-| Argument | Description | Example |
-| -------- | ----------- | ------- |
-| -u | single URL to scan | http://example.com |
+| Argument | Description | Example | Note |
+| -------- | ----------- | ------- | ---- |
+| -u | single URL to scan | http://example.com or http://example.com/ | All these example usages are handled in the same way |
 
 ## Which Cases Does This Tool Check?
  1. Testing `https://url.com/path`
