@@ -22,6 +22,7 @@
 -D <path_of_directory_list>
 
 | Argument | Description | Example |
+| -------- | ----------- | ------- |
 | -u | single URL to scan | http://example.com |
 
 ## Which Cases Does This Tool Check?
