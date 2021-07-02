@@ -3,9 +3,6 @@
 
 # 403bypasser
 
-# IMPORTANT NOTE:
-## New README is coming...
-
 ## Türkçe
 **403bypasser**, hedef sayfalardaki erişim kontrolü kısıtlamalarını aşmak için kullanılan teknikleri otomatikleştirir. Bu araç geliştirilmeye devam edecektir, katkılara açıktır. 
 
@@ -34,11 +31,15 @@
 ***
 
 ## Release Notes
-**Changes in v2.0**: Considerable changes has been done in this version. The project is completely moved to Python 3 from Bash. New and wide variety of techniques have been added.
+**Changes in v2.0**: Considerable changes has been done in this version. The project is completely moved to Python 3 from Bash. New and wide variety of techniques have been added.<br>
 **Changes in v1.1:** It's now possible to pass files (lists) to 403bypasser as input via arguments. Furthermore, two more test cases added: 
 poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers. 
 
 ***
+
+## To-Do List
+[ ] GUI
+[ ] Add rate-limit option
 
 ## Which Cases Does This Tool Check?
 
