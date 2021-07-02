@@ -10,6 +10,12 @@
 
 **403bypasser** automates the techniques used to circumvent access control restrictions on target pages. **403bypasser** will continue to be improved and it is open to contributions.
 
+## Installation
+
+1. Clone the repository to your machine. `git clone https://github.com/yunemse48/403bypasser.git`
+2. Install required modules by running the code `pip install -r requirements.txt`
+3. READY!
+
 ## Usage
 
 **Arguments:**<br>
