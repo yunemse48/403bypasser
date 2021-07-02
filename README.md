@@ -16,7 +16,7 @@
 ## Usage
 
 **Arguments:**
--u <single_url>&nbsp;&nbsp;&nbsp;ex: /admin, admin, /admin/, admin/&nbsp;403bypasser handles all these usages in the same way, it does not matter which one you prefer!
+-u <single_url>&emsp;&emsp;&emsp;ex: /admin, admin, /admin/, admin/&emsp;403bypasser handles all these usages in the same way, it does not matter which one you prefer!<br>
 -U <path_of_URL_list>
 -d <single_directory>
 -D <path_of_directory_list>
