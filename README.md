@@ -27,17 +27,18 @@
 | -d | single directory to scan | /admin or admin or admin or /admin/ | All these example usages are interpreted in the same way |
 | -D | path to list of directories | ./dirlist.txt, ../../dirlist.txt, etc.  | Just provide the path where the file is located :) |
 
-**Usage 1:** `python3 403bypasser.py -u https://example.com -d /secret`
-**Usage 2:** `python3 403bypasser.py -u https://example.com -D dirlist.txt`
-**Usage 3:** `python3 403bypasser.py -U urllist.txt -d /secret`
-**Usage 4:** `python3 403bypasser.py -U urllist.txt -D dirlist.txt`
+**Usage 1:** `python3 403bypasser.py -u https://example.com -d /secret`<br>
+**Usage 2:** `python3 403bypasser.py -u https://example.com -D dirlist.txt`<br>
+**Usage 3:** `python3 403bypasser.py -U urllist.txt -d /secret`<br>
+**Usage 4:** `python3 403bypasser.py -U urllist.txt -D dirlist.txt`<br>
 
 > Since Python is a cross-platform language, one can run this program on different operating systems. 
 
 ***
 
 ## Release Notes
-**Changes in v2.0**: Considerable changes has been done in this version. The project is completely moved to Python 3 from Bash. New and wide variety of techniques have been added.<br>
+**Changes in v2.0**: Considerable changes have been done in this version. The project is completely moved to Python 3 from Bash. New and wide variety of techniques have been added.<br>
+<br>
 **Changes in v1.1:** It's now possible to pass files (lists) to 403bypasser as input via arguments. Furthermore, two more test cases added: 
 poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers. 
 
