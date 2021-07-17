@@ -1,5 +1,19 @@
 import requests, sys, argparse, validators, os, tldextract, time
 from colorama import init, Fore, Style
+from pyfiglet import Figlet
+
+# INITIALISE COLORAMA
+init()
+
+# DISPLAY BANNER -- START
+custom_fig = Figlet(font='slant')
+print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('-----------') + Style.RESET_ALL)
+print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('403bypasser') + Style.RESET_ALL)
+print(Fore.GREEN + Style.BRIGHT + "____________________ Yunus Emre SERT ____________________\n")
+print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT + "-----> Twitter : https://twitter.com/yunem_se\n")
+print(Fore.MAGENTA + Style.BRIGHT + "-----> GitHub  : https://github.com/yunemse48\n")
+print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('-----------') + Style.RESET_ALL)
+# DISPLAY BANNER -- END
 
 # HANDLE ARGUMENTS -- START
 parser = argparse.ArgumentParser()
@@ -12,9 +26,6 @@ args = parser.parse_args()
 # HANDLE ARGUMENTS -- END
 
 
-
-# INITIALISE COLORAMA
-init()
 
 class Arguments():
     def __init__(self, url, urllist, dir, dirlist):
@@ -37,7 +48,7 @@ class Arguments():
     def checkURL(self):
         if self.url:
             if not validators.url(self.url):
-                print("You must specify a valid URL for -u (--url) argument! Exitting...")
+                print("You must specify a valid URL for -u (--url) argument! Exitting...\n")
                 sys.exit
             
             if self.url.endswith("/"):
@@ -46,7 +57,7 @@ class Arguments():
             self.urls.append(self.url)
         elif self.urllist:
             if not os.path.exists(self.urllist):
-                print("The specified path to URL list does not exist! Exitting...")
+                print("The specified path to URL list does not exist! Exitting...\n")
                 sys.exit()
             
             with open(self.urllist, 'r') as file:
@@ -55,7 +66,7 @@ class Arguments():
             for x in temp:
                 self.urls.append(x.strip())
         else:
-            print("Please provide a single URL or a list either! (-u or -U)")
+            print("Please provide a single URL or a list either! (-u or -U)\n")
             sys.exit()
     
     def checkDir(self):
@@ -68,7 +79,7 @@ class Arguments():
             self.dirs.append(self.dir)
         elif self.dirlist:
             if not os.path.exists(self.dirlist):
-                print("The specified path to directory list does not exist! Exitting...")
+                print("The specified path to directory list does not exist! Exitting...\n")
                 sys.exit()
             
             with open(self.dirlist, 'r') as file:
@@ -77,7 +88,7 @@ class Arguments():
             for x in temp:
                 self.dirs.append(x.strip())
         else:
-            print("You must specify a directory name or path to list! (-d or -D)")
+            print("You must specify a directory name or path to list! (-d or -D)\n")
             sys.exit()
 
 
