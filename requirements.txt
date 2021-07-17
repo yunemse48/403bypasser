@@ -3,4 +3,4 @@ argparse
 validators
 tldextract
 colorama
-Figlet
+pyfiglet
