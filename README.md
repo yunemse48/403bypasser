@@ -34,6 +34,11 @@
 
 > Since Python is a cross-platform language, one can run this program on different operating systems. 
 
+## Output
+
+The output of the program is saved (in the current directory) in a file with the name of the domain name given as input.
+For example: 
+`python3 403bypasser.py -u https://example.com -d /secret` is given. Then the output is saved to `example.txt` in the current directory.
 ***
 
 ## Release Notes
