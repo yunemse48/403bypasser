@@ -36,8 +36,8 @@
 
 ## Output
 
-The output of the program is saved (in the current directory) in a file with the name of the domain name given as input.
-For example: 
+The output of the program is saved (in the current directory) in a file with the name of the domain name given as input.<br>
+For example: <br>
 `python3 403bypasser.py -u https://example.com -d /secret` is given. Then the output is saved to `example.txt` in the current directory.
 ***
 
