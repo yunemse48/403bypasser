@@ -53,6 +53,8 @@ poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers.
 - [ ] GUI
 - [ ] Add Rate-Limit Option
 - [ ] Export cURL Command for Each Request
+- [ ] Add Parameters to Save Output According to HTTP Status Codes
+- [ ] Add Parameters to Save Output According to Page Size Anomalies
 
 ## Which Cases Does This Tool Check?
 
