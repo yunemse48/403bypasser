@@ -24,7 +24,7 @@
 | -------- | ----------- | ------- | ---- |
 | -u | single URL to scan | http://example.com or http://example.com/ | All these example usages are interpreted in the same way |
 | -U | path to list of URLs | ./urllist.txt, ../../urllist.txt, etc.  | Just provide the path where the file is located :) |
-| -d | single directory to scan | /admin or admin or admin or /admin/ | All these example usages are interpreted in the same way |
+| -d | single directory to scan | admin or /admin or admin/ or /admin/ | All these example usages are interpreted in the same way |
 | -D | path to list of directories | ./dirlist.txt, ../../dirlist.txt, etc.  | Just provide the path where the file is located :) |
 
 **Usage 1:** `python3 403bypasser.py -u https://example.com -d /secret`<br>
