@@ -10,8 +10,9 @@ custom_fig = Figlet(font='slant')
 print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('-----------') + Style.RESET_ALL)
 print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('403bypasser') + Style.RESET_ALL)
 print(Fore.GREEN + Style.BRIGHT + "____________________ Yunus Emre SERT ____________________\n")
-print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT + "-----> Twitter : https://twitter.com/yunem_se\n")
-print(Fore.MAGENTA + Style.BRIGHT + "-----> GitHub  : https://github.com/yunemse48\n")
+print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT + "-----> Twitter   : https://twitter.com/yunem_se\n")
+print(Fore.MAGENTA + Style.BRIGHT + "-----> GitHub    : https://github.com/yunemse48\n")
+print(Fore.MAGENTA + Style.BRIGHT + "-----> LinkedIn  : https://www.linkedin.com/in/yunus-emre-sert-9102a9135/\n")
 print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('-----------') + Style.RESET_ALL)
 # DISPLAY BANNER -- END
 
