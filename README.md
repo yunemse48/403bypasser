@@ -3,7 +3,7 @@
 
 # 403bypasser
 
-![Banner](https://raw.githubusercontent.com/yunemse48/403bypasser/master/img/banner.png)
+![Banner](https://github.com/yunemse48/403bypasser/blob/master/img/banner_v2.png?raw=true)
 
 ## Türkçe
 **403bypasser**, hedef sayfalardaki erişim kontrolü kısıtlamalarını aşmak için kullanılan teknikleri otomatikleştirir. Bu araç geliştirilmeye devam edecektir, katkılara açıktır. 
