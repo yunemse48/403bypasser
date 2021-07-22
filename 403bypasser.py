@@ -29,10 +29,10 @@ args = parser.parse_args()
 
 
 class Arguments():
-    def __init__(self, url, urllist, dir, dirlist):
+    def __init__(self, url, urllist, _dir, dirlist):
         self.url = url
         self.urllist = urllist
-        self.dir = dir
+        self.dir = _dir
         self.dirlist = dirlist
         self.urls = []
         self.dirs = []
@@ -50,25 +50,27 @@ class Arguments():
         if self.url:
             if not validators.url(self.url):
                 print("You must specify a valid URL for -u (--url) argument! Exitting...\n")
-                sys.exit
+                sys.exit(1)
             
             if self.url.endswith("/"):
                 self.url = self.url.rstrip("/")
             
             self.urls.append(self.url)
+
         elif self.urllist:
             if not os.path.exists(self.urllist):
                 print("The specified path to URL list does not exist! Exitting...\n")
-                sys.exit()
+                sys.exit(1)
             
             with open(self.urllist, 'r') as file:
                 temp = file.readlines()
+                file.close()
             
             for x in temp:
                 self.urls.append(x.strip())
         else:
             print("Please provide a single URL or a list either! (-u or -U)\n")
-            sys.exit()
+            sys.exit(1)
     
     def checkDir(self):
         if self.dir:
@@ -81,10 +83,11 @@ class Arguments():
         elif self.dirlist:
             if not os.path.exists(self.dirlist):
                 print("The specified path to directory list does not exist! Exitting...\n")
-                sys.exit()
+                sys.exit(1)
             
             with open(self.dirlist, 'r') as file:
                 temp = file.readlines()
+                file.close()
             
             for x in temp:
                 self.dirs.append(x.strip())
@@ -145,44 +148,49 @@ class PathRepository():
 
 
 class Query():
-    def __init__(self, url, dir, dirObject):
+    def __init__(self, url, _dir, dirObject):
         self.url = url
-        self.dir = dir          # call pathrepo by this
+        self.dir = _dir          # call pathrepo by this
         self.dirObject = dirObject
         self.domain = tldextract.extract(self.url).domain
     
     
     
     def checkStatusCode(self, status_code):
-        if status_code == 200 or status_code == 201:
-            colour = Fore.GREEN + Style.BRIGHT
-        elif status_code == 301 or status_code == 302:
-            colour = Fore.BLUE + Style.BRIGHT
-        elif status_code == 403 or status_code == 404:
-            colour = Fore.MAGENTA + Style.BRIGHT
+        if status_code in [200, 201]:
+            color = Fore.GREEN + Style.BRIGHT
+
+        elif status_code in [301, 302]:
+            color = Fore.BLUE + Style.BRIGHT
+
+        elif status_code in [403, 404]:
+            color = Fore.MAGENTA + Style.BRIGHT
+
         elif status_code == 500:
-            colour = Fore.RED + Style.BRIGHT
+            color = Fore.RED + Style.BRIGHT
+
         else:
-            colour = Fore.WHITE + Style.BRIGHT
+            color = Fore.WHITE + Style.BRIGHT
         
-        return colour
+        return color
     
     def writeToFile(self, array):
-        with open(self.domain + ".txt", "a") as file:
+        with open(self.domain + ".txt", "w") as file:
             for line in array:
                 file.write(line + "\n")
+            file.close()
     
     def manipulateRequest(self):
         print((" Target URL: " + self.url + "\tTarget Path: " + self.dir + " ").center(121, "="))
         results = []
         p = requests.post(self.url + self.dir)
         
-        colour = self.checkStatusCode(p.status_code)
+        color = self.checkStatusCode(p.status_code)
         reset = Style.RESET_ALL
         
         line_width = 100
         target_address = "POST --> " + self.url + self.dir
-        info = f"STATUS: {colour}{p.status_code}{reset}\tSIZE: {len(p.content)}"
+        info = f"STATUS: {color}{p.status_code}{reset}\tSIZE: {len(p.content)}"
         info_pure = f"STATUS: {p.status_code}\tSIZE: {len(p.content)}"
         remaining = line_width - len(target_address)
         
@@ -202,10 +210,10 @@ class Query():
         for path in self.dirObject.newPaths:
             r = requests.get(self.url + path)
             
-            colour = self.checkStatusCode(r.status_code)
+            color = self.checkStatusCode(r.status_code)
             
             target_address = "GET --> " + self.url + path
-            info = f"STATUS: {colour}{r.status_code}{reset}\tSIZE: {len(r.content)}"
+            info = f"STATUS: {color}{r.status_code}{reset}\tSIZE: {len(r.content)}"
             info_pure = f"STATUS: {r.status_code}\tSIZE: {len(r.content)}"
             remaining = line_width - len(target_address)
             
@@ -225,11 +233,11 @@ class Query():
         for header in self.dirObject.newHeaders:
             r = requests.get(self.url + self.dir, headers=header)
             
-            colour = self.checkStatusCode(r.status_code)
+            color = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
             
             target_address = "GET --> " + self.url + self.dir
-            info = f"STATUS: {colour}{r.status_code}{reset}\tSIZE: {len(r.content)}"
+            info = f"STATUS: {color}{r.status_code}{reset}\tSIZE: {len(r.content)}"
             info_pure = f"STATUS: {r.status_code}\tSIZE: {len(r.content)}"
             remaining = line_width - len(target_address)
             
@@ -246,11 +254,11 @@ class Query():
         for header in self.dirObject.rewriteHeaders:
             r = requests.get(self.url, headers=header)
             
-            colour = self.checkStatusCode(r.status_code)
+            color = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
             
             target_address = "GET --> " + self.url
-            info = f"STATUS: {colour}{r.status_code}{reset}\tSIZE: {len(r.content)}"
+            info = f"STATUS: {color}{r.status_code}{reset}\tSIZE: {len(r.content)}"
             info_pure = f"STATUS: {r.status_code}\tSIZE: {len(r.content)}"
             remaining = line_width - len(target_address)
             
