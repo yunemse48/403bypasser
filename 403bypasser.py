@@ -93,7 +93,7 @@ class Arguments():
                 self.dirs.append(x.strip())
         else:
             print("You must specify a directory name or path to list! (-d or -D)\n")
-            sys.exit()
+            sys.exit(1)
 
 
 class PathRepository():
