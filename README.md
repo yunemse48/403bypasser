@@ -34,6 +34,14 @@
 **Usage 3:** `python3 403bypasser.py -U urllist.txt -d /secret`<br>
 **Usage 4:** `python3 403bypasser.py -U urllist.txt -D dirlist.txt`<br>
 
+**IMPORTANT NOTE:** All the followings are interpreted the same. Therefore, which pattern you use is just a matter of preference.
+- `python3 403bypasser.py -u https://example.com -d secret`<br>
+- `python3 403bypasser.py -u https://example.com -d /secret`<br>
+- `python3 403bypasser.py -u https://example.com -d /secret/`<br>
+- `python3 403bypasser.py -u https://example.com -d secret/`<br>
+- `python3 403bypasser.py -u https://example.com/ -d secret`<br>
+***ALL THE SAME!***
+
 > Since Python is a cross-platform language, one can run this program on different operating systems. 
 
 ## Output
