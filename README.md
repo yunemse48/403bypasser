@@ -62,6 +62,7 @@ poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers.
 ## To-Do List
 - [ ] GUI
 - [ ] Add Rate-Limit Option
+- [ ] Add an Option for Scan Type (fast, normal, aggressive or only path manipulation / header manipulation)
 - [ ] Export cURL Command for Each Request
 - [ ] Add Parameters to Save Output According to HTTP Status Codes
 - [ ] Add Parameters to Save Output According to Page Size Anomalies
