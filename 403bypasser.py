@@ -212,10 +212,10 @@ class Query():
             print(target_address + " " * remaining + info)
             
             results.append(target_address + " " * remaining + info_pure)
-            time.sleep(0.05)
+            # time.sleep(0.05)
         
         self.writeToFile(results)
-        time.sleep(1)
+        # time.sleep(1)
         self.manipulateHeaders()
     
     def manipulateHeaders(self):
@@ -237,10 +237,10 @@ class Query():
             print(f"Header= {header}")
             
             results.append("\n" + target_address + " " * remaining + info_pure + f"\nHeader= {header}")
-            time.sleep(0.05)
+            # time.sleep(0.05)
         self.writeToFile(results)
         
-        time.sleep(1)
+        # time.sleep(1)
         
         results_2 = []
         for header in self.dirObject.rewriteHeaders:
@@ -258,7 +258,7 @@ class Query():
             print(f"Header= {header}")
             
             results_2.append("\n" + target_address + " " * remaining + info_pure + f"\nHeader= {header}")
-            time.sleep(0.05)
+            # time.sleep(0.05)
         
         self.writeToFile(results_2)
 
