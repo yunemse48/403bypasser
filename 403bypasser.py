@@ -20,7 +20,7 @@ print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('-------------') + Style.
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", "--url", type=str, help="single URL to scan, ex: http://example.com")
 parser.add_argument("-U", "--urllist", type=str, help="path to list of URLs, ex: urllist.txt")
-parser.add_argument("-d", "--dir", type=str, help="Single directory to scan, ex: /admin")
+parser.add_argument("-d", "--dir", type=str, help="Single directory to scan, ex: /admin", nargs="?", const="/")
 parser.add_argument("-D", "--dirlist", type=str, help="path to list of directories, ex: dirlist.txt")
 
 args = parser.parse_args()
@@ -75,7 +75,7 @@ class Arguments():
             if not self.dir.startswith("/"): 
                 self.dir = "/" + self.dir
             
-            if self.dir.endswith("/"):
+            if self.dir.endswith("/") and self.dir != "/":
                 self.dir = self.dir.rstrip("/")
             self.dirs.append(self.dir)
         elif self.dirlist:
@@ -89,8 +89,7 @@ class Arguments():
             for x in temp:
                 self.dirs.append(x.strip())
         else:
-            print("You must specify a directory name or path to list! (-d or -D)\n")
-            sys.exit()
+            self.dir = "/"
 
 
 class PathRepository():
@@ -212,10 +211,10 @@ class Query():
             print(target_address + " " * remaining + info)
             
             results.append(target_address + " " * remaining + info_pure)
-            # time.sleep(0.05)
+            time.sleep(0.05)
         
         self.writeToFile(results)
-        # time.sleep(1)
+        time.sleep(1)
         self.manipulateHeaders()
     
     def manipulateHeaders(self):
@@ -237,10 +236,10 @@ class Query():
             print(f"Header= {header}")
             
             results.append("\n" + target_address + " " * remaining + info_pure + f"\nHeader= {header}")
-            # time.sleep(0.05)
+            time.sleep(0.05)
         self.writeToFile(results)
         
-        # time.sleep(1)
+        time.sleep(1)
         
         results_2 = []
         for header in self.dirObject.rewriteHeaders:
@@ -258,7 +257,7 @@ class Query():
             print(f"Header= {header}")
             
             results_2.append("\n" + target_address + " " * remaining + info_pure + f"\nHeader= {header}")
-            # time.sleep(0.05)
+            time.sleep(0.05)
         
         self.writeToFile(results_2)
 
@@ -271,7 +270,10 @@ class Program():
     def initialise(self):
         for u in self.urllist:
             for d in self.dirlist:
-                dir_objname = d.lstrip("/")
+                if d != "/":
+                    dir_objname = d.lstrip("/")
+                else:
+                    dir_objname = "_rootPath"
                 locals()[dir_objname] = PathRepository(d)
                 domain_name = tldextract.extract(u).domain
                 locals()[domain_name] = Query(u, d, locals()[dir_objname])
