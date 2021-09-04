@@ -126,4 +126,4 @@ poisoning with 1)`X-Original-URL` and 2)`X-Rewrite-URL` headers.
 - `10.0.0.1`
 - `172.16.0.0`
 - `172.16.0.1`
-- `192.168.1.0`import requests, sys, argparse, validators, os, tldextract
+- `192.168.1.0`
