@@ -34,7 +34,7 @@
 **Usage 2:** `python3 403bypasser.py -u https://example.com -D dirlist.txt`<br>
 **Usage 3:** `python3 403bypasser.py -U urllist.txt -d /secret`<br>
 **Usage 4:** `python3 403bypasser.py -U urllist.txt -D dirlist.txt`<br>
-**Usage 5 (With proxy):** `python3 403bypasser2.py -u https://example.com -d /secret/ -p 127.0.0.1:8080`
+**Usage 5 (With proxy):** `python3 403bypasser.py -u https://example.com -d /secret/ -p 127.0.0.1:8080`
 
 **IMPORTANT NOTE:** All the followings are interpreted the same. Therefore, which pattern you use is just a matter of preference.
 - `python3 403bypasser.py -u https://example.com -d secret`<br>
