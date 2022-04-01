@@ -4,7 +4,6 @@ from pyfiglet import Figlet
 
 # INITIALISE COLORAMA
 init()
-
 # DISPLAY BANNER -- START
 custom_fig = Figlet(font='slant')
 print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('-------------') + Style.RESET_ALL)
@@ -13,6 +12,10 @@ print(Fore.GREEN + Style.BRIGHT + "____________________ Yunus Emre SERT ________
 print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT + "-----> Twitter   : https://twitter.com/yunem_se\n")
 print(Fore.MAGENTA + Style.BRIGHT + "-----> GitHub    : https://github.com/yunemse48\n")
 print(Fore.MAGENTA + Style.BRIGHT + "-----> LinkedIn  : https://www.linkedin.com/in/yunus-emre-sert-9102a9135/\n")
+print(Fore.GREEN + Style.BRIGHT + "____________________ Proxy Contribution - Judd Rouillon ____________________\n")
+print(Fore.LIGHTMAGENTA_EX + Style.BRIGHT + "-----> Twitter   : https://twitter.com/judd3rm0n\n")
+print(Fore.MAGENTA + Style.BRIGHT + "-----> GitHub    : https://github.com/judd3rm0n\n")
+print(Fore.MAGENTA + Style.BRIGHT + "-----> LinkedIn  : https://www.linkedin.com/in/judd-r/\n")
 print(Fore.BLUE + Style.BRIGHT + custom_fig.renderText('-------------') + Style.RESET_ALL)
 # DISPLAY BANNER -- END
 
@@ -22,11 +25,17 @@ parser.add_argument("-u", "--url", type=str, help="single URL to scan, ex: http:
 parser.add_argument("-U", "--urllist", type=str, help="path to list of URLs, ex: urllist.txt")
 parser.add_argument("-d", "--dir", type=str, help="Single directory to scan, ex: /admin", nargs="?", const="/")
 parser.add_argument("-D", "--dirlist", type=str, help="path to list of directories, ex: dirlist.txt")
+parser.add_argument("-p", "--proxy", type=str, help="Send requests to proxy (may help with rate limits and burp/interceptor), ex: 127.0.0.1:8080", default="") # Added arg
 
 args = parser.parse_args()
 # HANDLE ARGUMENTS -- END
 
-
+# Global for proxy
+proxy = args.proxy
+inProxies = { 
+              "http"  : proxy, 
+              "https" : proxy, 
+            }
 
 class Arguments():
     def __init__(self, url, urllist, dir, dirlist):
@@ -36,9 +45,16 @@ class Arguments():
         self.dirlist = dirlist
         self.urls = []
         self.dirs = []
+        print(proxy)
+       
         
         self.checkURL()
         self.checkDir()
+        self.checkPro()
+        
+        # Return Proxy - Might not be required. 
+    def return_pro():
+        return proxy
     
     def return_urls(self):
         return self.urls
@@ -46,6 +62,23 @@ class Arguments():
     def return_dirs(self):
         return self.dirs
     
+    # Proxy valid? - Don't think the isalpha works. 
+    def checkPro(self):
+        if proxy:
+            # disable_warnings needed to stop warnings that would appear under each result. 
+            requests.packages.urllib3.disable_warnings()
+            if str.isalpha(proxy):
+                print("The proxy input is incorrect, it should be IP:PORT ex: 127.0.0.0:8080! Exitting...\n")
+                sys.exit()
+            # Check to see if : is inclided. 
+            if ":" not in proxy:
+                print("Proxy input is missing ':', it should be IP:PORT ex: 127.0.0.0:8080! Exitting...\n")
+                sys.exit()
+            
+        else:
+         	print("Proxy not used")
+         	 
+    	
     def checkURL(self):
         if self.url:
             if not validators.url(self.url):
@@ -142,14 +175,18 @@ class PathRepository():
         for element in headers_overwrite:
             self.rewriteHeaders.append({element : self.path})
 
-
+# Added proxy into the init, added as an optional with blank default to bypass if the user doesn't add a proxy value. 
 class Query():
-    def __init__(self, url, dir, dirObject):
+    def __init__(self, url, dir, dirObject, proxy=""):
+        if proxy != "":
+          print("hit")
+        self.proxy = proxy # Added proxy to this. 
         self.url = url
         self.dir = dir          # call pathrepo by this
         self.dirObject = dirObject
         self.domain = tldextract.extract(self.url).domain
-    
+        
+    		
     
     
     def checkStatusCode(self, status_code):
@@ -174,7 +211,13 @@ class Query():
     def manipulateRequest(self):
         print((" Target URL: " + self.url + "\tTarget Path: " + self.dir + " ").center(121, "="))
         results = []
-        p = requests.post(self.url + self.dir)
+        # IF to change the request params, verify=false bypasses the TLS checks. 
+        if proxy != "":
+        	print("\nProxy online \n")
+        	p = requests.post(self.url + self.dir, proxies=inProxies, verify=False)
+        else:
+        	p = requests.post(self.url + self.dir)
+        	
         
         colour = self.checkStatusCode(p.status_code)
         reset = Style.RESET_ALL
@@ -199,7 +242,11 @@ class Query():
         line_width = 100
         
         for path in self.dirObject.newPaths:
-            r = requests.get(self.url + path)
+            # Proxy IF
+            if proxy != "":
+               r = requests.get(self.url + path, proxies=inProxies, verify=False)
+            else:
+               r = requests.get(self.url + path)
             
             colour = self.checkStatusCode(r.status_code)
             
@@ -220,7 +267,11 @@ class Query():
         line_width = 100
         
         for header in self.dirObject.newHeaders:
-            r = requests.get(self.url + self.dir, headers=header)
+            # Proxy if
+            if proxy != "":
+               r = requests.get(self.url + self.dir, headers=header,  proxies=inProxies, verify=False)
+            else:
+               r = requests.get(self.url + self.dir, headers=header)
             
             colour = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
@@ -238,7 +289,11 @@ class Query():
         
         results_2 = []
         for header in self.dirObject.rewriteHeaders:
-            r = requests.get(self.url, headers=header)
+            # Proxy if
+            if proxy != "":
+            	r = requests.get(self.url, headers=header, proxies=inProxies, verify=False)
+            else:
+            	r = requests.get(self.url, headers=header)
             
             colour = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
@@ -260,8 +315,10 @@ class Program():
     def __init__(self, urllist, dirlist):
         self.urllist = urllist
         self.dirlist = dirlist
+        self.proxy = proxy
     
     def initialise(self):
+    	
         for u in self.urllist:
             for d in self.dirlist:
                 if d != "/":
