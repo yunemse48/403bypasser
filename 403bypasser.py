@@ -174,7 +174,7 @@ class Query():
     def manipulateRequest(self):
         print((" Target URL: " + self.url + "\tTarget Path: " + self.dir + " ").center(121, "="))
         results = []
-        p = requests.post(self.url + self.dir)
+        p = requests.post(self.url + self.dir, verify=False)
         
         colour = self.checkStatusCode(p.status_code)
         reset = Style.RESET_ALL
@@ -199,7 +199,7 @@ class Query():
         line_width = 100
         
         for path in self.dirObject.newPaths:
-            r = requests.get(self.url + path)
+            r = requests.get(self.url + path, verify=False)
             
             colour = self.checkStatusCode(r.status_code)
             
@@ -220,7 +220,7 @@ class Query():
         line_width = 100
         
         for header in self.dirObject.newHeaders:
-            r = requests.get(self.url + self.dir, headers=header)
+            r = requests.get(self.url + self.dir, headers=header, verify=False)
             
             colour = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
@@ -238,7 +238,7 @@ class Query():
         
         results_2 = []
         for header in self.dirObject.rewriteHeaders:
-            r = requests.get(self.url, headers=header)
+            r = requests.get(self.url, headers=header, verify=False)
             
             colour = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
@@ -262,16 +262,25 @@ class Program():
         self.dirlist = dirlist
     
     def initialise(self):
+        path_objects = {}  # Store PathRepository objects here
+        query_objects = {} # Store Query objects here
+
         for u in self.urllist:
             for d in self.dirlist:
-                if d != "/":
-                    dir_objname = d.lstrip("/")
-                else:
-                    dir_objname = "_rootPath"
-                locals()[dir_objname] = PathRepository(d)
+                # 1. Create a safe key for the directory
+                dir_key = d if d != "/" else "_rootPath"
+
+                # 2. Store the PathRepository in our dict
+                path_objects[dir_key] = PathRepository(d)
+
+                # 3. Extract domain for the query key
                 domain_name = tldextract.extract(u).domain
-                locals()[domain_name] = Query(u, d, locals()[dir_objname])
-                locals()[domain_name].manipulateRequest()
+
+                # 4. Initialize Query using our dicts instead of locals()
+                query_objects[domain_name] = Query(u, d, path_objects[dir_key])
+
+                # 5. Run the logic
+                query_objects[domain_name].manipulateRequest()
 
 argument = Arguments(args.url, args.urllist, args.dir, args.dirlist)
 program = Program(argument.return_urls(), argument.return_dirs())
