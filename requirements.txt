@@ -4,3 +4,4 @@ validators
 tldextract
 colorama
 pyfiglet
+urllib3
