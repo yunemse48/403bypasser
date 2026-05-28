@@ -50,7 +50,8 @@ class Arguments():
         if self.url:
             if not validators.url(self.url):
                 print("You must specify a valid URL for -u (--url) argument! Exitting...\n")
-                sys.exit
+                #Muteavery: Syntax fix + adding exit code
+                sys.exit(1)
             
             if self.url.endswith("/"):
                 self.url = self.url.rstrip("/")
@@ -59,7 +60,8 @@ class Arguments():
         elif self.urllist:
             if not os.path.exists(self.urllist):
                 print("The specified path to URL list does not exist! Exitting...\n")
-                sys.exit()
+                #muteavery: adding exit code
+                sys.exit(1)
             
             with open(self.urllist, 'r') as file:
                 temp = file.readlines()
@@ -68,7 +70,8 @@ class Arguments():
                 self.urls.append(x.strip())
         else:
             print("Please provide a single URL or a list either! (-u or -U)\n")
-            sys.exit()
+            #muteavery: adding exit code
+            sys.exit(1)
     
     def checkDir(self):
         if self.dir:
@@ -81,7 +84,8 @@ class Arguments():
         elif self.dirlist:
             if not os.path.exists(self.dirlist):
                 print("The specified path to directory list does not exist! Exitting...\n")
-                sys.exit()
+                #muteavery: adding exit code
+                sys.exit(1)
             
             with open(self.dirlist, 'r') as file:
                 temp = file.readlines()
@@ -151,20 +155,21 @@ class Query():
         self.domain = tldextract.extract(self.url).domain
     
     
-    
+    # MuteAvery: added switch case, to improve readabilty and to make it easier to append new status codes
     def checkStatusCode(self, status_code):
-        if status_code == 200 or status_code == 201:
-            colour = Fore.GREEN + Style.BRIGHT
-        elif status_code == 301 or status_code == 302:
-            colour = Fore.BLUE + Style.BRIGHT
-        elif status_code == 403 or status_code == 404:
-            colour = Fore.MAGENTA + Style.BRIGHT
-        elif status_code == 500:
-            colour = Fore.RED + Style.BRIGHT
-        else:
-            colour = Fore.WHITE + Style.BRIGHT
+        status_colours = {
+            200: Fore.GREEN + Style.BRIGHT,
+            201: Fore.GREEN + Style.BRIGHT,
+            301: Fore.BLUE + Style.BRIGHT,
+            302: Fore.BLUE + Style.BRIGHT,
+            403: Fore.BLUE + Style.BRIGHT,
+            500: Fore.RED + Style.BRIGHT,
+            }
         
-        return colour
+        return status_colours.get(
+            status_code,
+            Fore.WHITE + Style.BRIGHT
+            )
     
     def writeToFile(self, array):
         with open(self.domain + ".txt", "a") as file:
@@ -174,7 +179,7 @@ class Query():
     def manipulateRequest(self):
         print((" Target URL: " + self.url + "\tTarget Path: " + self.dir + " ").center(121, "="))
         results = []
-        p = requests.post(self.url + self.dir)
+        p = requests.post(self.url + self.dir, timeout=10)
         
         colour = self.checkStatusCode(p.status_code)
         reset = Style.RESET_ALL
@@ -199,7 +204,8 @@ class Query():
         line_width = 100
         
         for path in self.dirObject.newPaths:
-            r = requests.get(self.url + path)
+            # Muteavery: added timeout to request
+            r = requests.get(self.url + path, timeout=10)
             
             colour = self.checkStatusCode(r.status_code)
             
@@ -220,7 +226,8 @@ class Query():
         line_width = 100
         
         for header in self.dirObject.newHeaders:
-            r = requests.get(self.url + self.dir, headers=header)
+             # Muteavery: added timeout to request
+            r = requests.get(self.url + self.dir, headers=header,timeout=10,)
             
             colour = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
@@ -238,7 +245,8 @@ class Query():
         
         results_2 = []
         for header in self.dirObject.rewriteHeaders:
-            r = requests.get(self.url, headers=header)
+             # Muteavery: added timeout to request
+            r = requests.get(self.url, headers=header, timeout=10)
             
             colour = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
@@ -261,19 +269,41 @@ class Program():
         self.urllist = urllist
         self.dirlist = dirlist
     
+    # muteavery: FIX for issue KeyError 
+    # initialise locals()[domain_name] = Query(u, d, locals()[dir_objname]) 
+    # ~~~~~~~~^^^^^^^^^^^^^ KeyError: 'secret'
     def initialise(self):
-        for u in self.urllist:
-            for d in self.dirlist:
-                if d != "/":
-                    dir_objname = d.lstrip("/")
+        path_objects = {}
+        query_objects = {}
+
+        for url in self.urllist:
+            for dir in self.dirlist:
+
+                if dir != "/":
+                    dir_objname = dir.lstrip("/")
                 else:
                     dir_objname = "_rootPath"
-                locals()[dir_objname] = PathRepository(d)
-                domain_name = tldextract.extract(u).domain
-                locals()[domain_name] = Query(u, d, locals()[dir_objname])
-                locals()[domain_name].manipulateRequest()
 
-argument = Arguments(args.url, args.urllist, args.dir, args.dirlist)
-program = Program(argument.return_urls(), argument.return_dirs())
+                path_objects[dir_objname] = PathRepository(dir)
 
-program.initialise()
+                domain_name = tldextract.extract(url).domain
+
+                query_objects[domain_name] = Query(
+                    url,
+                    dir,
+                    path_objects[dir_objname]
+                )
+
+                query_objects[domain_name].manipulateRequest()
+
+# added try/except block to handle manual exiting 
+try:
+    argument = Arguments(args.url, args.urllist, args.dir, args.dirlist)
+    program = Program(argument.return_urls(), argument.return_dirs())
+
+    program.initialise()
+
+except KeyboardInterrupt:
+    print("\n\n[!] Interrupted by user (Ctrl+C)")
+    sys.exit(1)
+
