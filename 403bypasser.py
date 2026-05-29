@@ -310,6 +310,9 @@ class Query:
                 headers=header,
                 timeout=10,
             )
+            if r.status_code == 429:
+                print("[!] Rate limited by target, sleeping for 5 seconds...")
+                sleep(5)
 
             colour = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
@@ -334,8 +337,10 @@ class Query:
         results_2 = []
         for header in self.dirObject.rewriteHeaders:
             # Muteavery: added timeout to request
-            sleep(0.5)
             r = requests.get(self.url, headers=header, timeout=10)
+            if r.status_code == 429:
+                print("[!] Rate limited by target, sleeping for 5 seconds...")
+                sleep(5)
 
             colour = self.checkStatusCode(r.status_code)
             reset = Style.RESET_ALL
