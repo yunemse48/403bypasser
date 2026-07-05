@@ -281,7 +281,7 @@ class Query:
 
         for path in self.dirObject.newPaths:
             # Muteavery: added timeout to request
-            sleep()
+            sleep(1)
             r = requests.get(self.url + path, timeout=10)
 
             colour = self.checkStatusCode(r.status_code)
